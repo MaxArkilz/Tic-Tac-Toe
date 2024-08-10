@@ -4,13 +4,14 @@ import os
 
 def playBall():
     # main game engine
-    # reset game board, print board, start game loop
+    # reset game board, start game loop
     print('Do you want to go first?')
     print('a) Yes, I\'ll go first.')
     print('b) No, you go ahead.')
     whosOnFirst = input('Type \'a\' or \'b\' ')
     gameBoard = {1: ' ', 2: ' ', 3: ' ', 4: ' ', 5: ' ', 6: ' ', 7: ' ', 8: ' ', 9: ' '}
     isGameRunning = True
+    
     while isGameRunning:
 
         # game turn tracker, depending on who goes first
@@ -69,6 +70,7 @@ def playBall():
 
 
 def threeInRow(board):
+    # check if either side has won
     possibleWins = [
         (1, 2, 3),
         (4, 5, 6),
@@ -100,17 +102,21 @@ def playerTurn(board):
     print('4 | 5 | 6')
     print('_  _  _')
     print('7 | 8 | 9')
+    
     # provide user input
     print('Where would you like to go?')
     move = input('Type a number 1 - 9: ')
+    
     # make sure input is valid
     if int(move) not in board:
         print('Invalid input, try again.')
         playerTurn(board)
+        
     # make sure space is empty
     if board[int(move)] != ' ':
         print('That space is occupied, please choose a different spot.')
         playerTurn(board)
+        
     # change board to player move
     return int(move)
 
@@ -128,6 +134,7 @@ def aiTurn(board):
         (3, 5, 7)
     ]
 
+    # prioritize center play
     if board[5] == ' ':
         return 5
 
@@ -157,6 +164,7 @@ def aiTurn(board):
 
 
 def theEnd(winner):
+    # end game text and pause
     if winner == 'xwin':
         print('Congradulations! You won!')
 
@@ -166,7 +174,7 @@ def theEnd(winner):
     elif winner == 'tie':
         print('Look\'s like a cat\'s game')
 
-    input('Press any key to continue')
+    input('Press enter to continue')
     mainMenu()
 
 
@@ -174,6 +182,7 @@ def mainMenu():
     # Provide main menu to play a game or exit the program
     print('Hello! Welcome to the Tic Tac Toe Machine.')
     print('Do you want to play a game?')
+    
     while True:
         playerChoice = input('Type \'yes\' or \'no\' ')
         if playerChoice.lower() == 'yes':
